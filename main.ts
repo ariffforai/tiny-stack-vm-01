@@ -7,6 +7,7 @@ if(t>=1e6)return T(10);
 if(p<0||p>=P.length)return T(9);
 let k=P[p],w=1;
 t++;
+if(k>=48&&k<=51){if(p+2>=P.length)return T(9);w=3;m=P[p+1]|P[p+2]<<8;if(k<51&&m>32767)m-=65536;}
 switch(k){
 case 0:return T(0);
 case 1:if(p+1>=P.length)return T(9);w=2;m=P[p+1];if(m>127)m-=256;if(s>=256)return T(3);S[s++]=m;break;
@@ -34,10 +35,10 @@ case 30:if(s<2)return T(2);y=S[--s];x=S[--s];S[s++]=(x>>>y)|0;break;
 case 32:if(s<2)return T(2);y=S[--s];x=S[--s];S[s++]=x===y?1:0;break;
 case 33:if(s<2)return T(2);y=S[--s];x=S[--s];S[s++]=x<y?1:0;break;
 case 34:if(s<2)return T(2);y=S[--s];x=S[--s];S[s++]=(x>>>0)<(y>>>0)?1:0;break;
-case 48:if(p+2>=P.length)return T(9);w=3;m=P[p+1]|P[p+2]<<8;if(m>32767)m-=65536;p+=w+m;w=0;break;
-case 49:if(p+2>=P.length)return T(9);w=3;m=P[p+1]|P[p+2]<<8;if(m>32767)m-=65536;if(s<1)return T(2);x=S[--s];if(!x){p+=w+m;w=0}break;
-case 50:if(p+2>=P.length)return T(9);w=3;m=P[p+1]|P[p+2]<<8;if(m>32767)m-=65536;if(s<1)return T(2);x=S[--s];if(x){p+=w+m;w=0}break;
-case 51:if(p+2>=P.length)return T(9);w=3;m=P[p+1]|P[p+2]<<8;if(c>=64)return T(7);C[c++]=p+w;p=m;w=0;break;
+case 48:p+=w+m;w=0;break;
+case 49:if(s<1)return T(2);x=S[--s];if(!x){p+=w+m;w=0}break;
+case 50:if(s<1)return T(2);x=S[--s];if(x){p+=w+m;w=0}break;
+case 51:if(c>=64)return T(7);C[c++]=p+w;p=m;w=0;break;
 case 52:if(!c)return T(8);p=C[--c];w=0;break;
 case 64:if(s<1)return T(2);x=S[s-1];if(x<0||x>255)return T(6);S[s-1]=M[x];break;
 case 65:if(s<2)return T(2);y=S[--s];x=S[--s];if(y<0||y>255)return T(6);M[y]=x;break;
